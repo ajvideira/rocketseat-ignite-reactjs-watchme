@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { api } from './services/api';
 
@@ -34,10 +34,13 @@ export function App() {
     });
   }, [selectedGenreId]);
 
-  function handleSelectGenre(genreId: number) {
-    setSelectedGenreId(genreId);
-    setSelectedGenre(genres.find((genre) => genre.id === genreId) as Genre);
-  }
+  const handleSelectGenre = useCallback(
+    (genreId: number) => {
+      setSelectedGenreId(genreId);
+      setSelectedGenre(genres.find((genre) => genre.id === genreId) as Genre);
+    },
+    [genres]
+  );
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
